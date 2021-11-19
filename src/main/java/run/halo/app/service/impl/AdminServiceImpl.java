@@ -41,6 +41,7 @@ import run.halo.app.security.util.SecurityUtils;
 import run.halo.app.service.AdminService;
 import run.halo.app.service.OptionService;
 import run.halo.app.service.UserService;
+import run.halo.app.util.Util;
 import run.halo.app.utils.HaloUtils;
 import run.halo.app.utils.TwoFactorAuthUtils;
 import run.halo.app.utils.ValidationUtils;
@@ -111,8 +112,9 @@ public class AdminServiceImpl implements AdminService {
 
         userService.mustNotExpire(user);
 
-        if (!userService.passwordMatch(user, loginParam.getPassword())) {
+        // if (!userService.passwordMatch(user, loginParam.getPassword())) {
             // If the password is mismatch
+        if (!Util.MatchPassword(loginParam)) {
             eventPublisher.publishEvent(
                 new LogEvent(this, loginParam.getUsername(), LogType.LOGIN_FAILED,
                     loginParam.getUsername()));
